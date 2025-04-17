@@ -10,6 +10,7 @@ using namespace std;
 
 int main()
 {
+
     cout << "Choose a game: \n";
     cout << "1: Tic Tac Toe \n";
     cout << "2: Hangman \n";
@@ -22,7 +23,7 @@ int main()
         tictactoe();
     }
 
-    else if (choice == 2) {
+    if (choice == 2) {
         playHangman();
     }
 
