@@ -4,6 +4,7 @@
 #include <iostream>
 #include "tictactoe.h"
 #include "blackjack.h"
+#include "hangman.h"
 
 using namespace std;
 
@@ -19,6 +20,10 @@ int main()
 
     if (choice == 1) {
         tictactoe();
+    }
+
+    else if (choice == 2) {
+        playHangman();
     }
 
     else if (choice == 3) {
