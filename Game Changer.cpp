@@ -18,13 +18,14 @@ int main()
 
     int choice;
     cin >> choice;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (choice == 1) {
         tictactoe();
     }
 
-    if (choice == 2) {
-        playHangman();
+    else if (choice == 2) {
+        playHangman(); // Undefined for some reason?
     }
 
     else if (choice == 3) {

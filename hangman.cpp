@@ -94,6 +94,8 @@ bool isValidGuess(const string& guess) {
 }
 
 void playHangman() {
+    cout << "TEST";
+
     string username;
     cout << "Enter your username: ";
     getline(cin, username);
