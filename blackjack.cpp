@@ -103,7 +103,7 @@ bool playGame(int& balance) {
     return true;
 }
 
-int blackjack() {
+void blackjack() {
     srand(static_cast<unsigned int>(time(0)));
     int balance = 500;
     char playAgain;
@@ -116,5 +116,4 @@ int blackjack() {
 
     cout << "\nFinal balance: $" << balance << endl;
     cout << "Thanks for playing Blackjack!" << endl;
-    return 0;
 }
