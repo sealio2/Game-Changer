@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="adventure.cpp" />
     <ClCompile Include="blackjack.cpp" />
     <ClCompile Include="Game Changer.cpp" />
     <ClCompile Include="hangman.cpp" />
@@ -135,10 +136,8 @@
     <ClCompile Include="util_functions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="blackjack.h" />
-    <ClInclude Include="hangman.h" />
+    <ClInclude Include="games.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="tictactoe.h" />
     <ClInclude Include="util_functions.h" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,9 @@
 #include <string>
 #include <Windows.h>
 #include <thread>
-#include "tictactoe.h"
+#include <cctype>
+
+#include "games.h"
 
 using namespace std;
 
@@ -27,8 +29,12 @@ void player_turn(char board[3][3]) {
 
     while (true) {
         while (true) {
-            cout << "Enter the x coord (1, 2, 3):" << endl;
+            cout << "Enter the x coord (1, 2, 3) (-1 to return to menu):" << endl;
             cin >> x_pos;
+
+            if (x_pos == -1) {
+                main();
+            }
 
             if ((x_pos < 1) || (x_pos > 3)) {
                 clear_terminal();
@@ -40,8 +46,12 @@ void player_turn(char board[3][3]) {
         }
 
         while (true) {
-            cout << "Enter the y coord (1, 2, 3):" << endl;
+            cout << "Enter the y coord (1, 2, 3) (-1 to return to menu):" << endl;
             cin >> y_pos;
+
+            if (y_pos == -1) {
+                main();
+            }
 
             if ((y_pos < 1) || (y_pos > 3)) {
                 clear_terminal();
@@ -155,14 +165,6 @@ void tictactoe() {
     int turn = 1;
     char result;
 
-    // Below: Allows for console (ANSI) commands, such as clearing the console (see util_functions.cpp). This should be moved to the main UI module once thats done
-    // It only needs to be ran once
-    HANDLE hStdout;
-
-    hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    SetConsoleMode(hStdout, ENABLE_PROCESSED_OUTPUT | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-
     // Main Game Loop
     while (true) {
         clear_terminal();
@@ -193,6 +195,25 @@ void tictactoe() {
         else if (result == 'D') {
             cout << "Game is a draw!";
             break;
+        }
+    }
+
+    while (true) {
+        cout << "\nPlay again? (y/n): ";
+        char play_again;
+
+        cin >> play_again;
+        play_again = tolower(play_again);
+
+        if (play_again == 'y') {
+            tictactoe();
+        }
+        else if (play_again == 'n') {
+            main();
+        }
+        else {
+            cout << "\nPlease enter a valid respone.";
+            continue;
         }
     }
 }

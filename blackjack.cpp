@@ -2,7 +2,8 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include "blackjack.h"
+#include <string>
+#include "games.h"
 
 using namespace std;
 
@@ -45,7 +46,11 @@ void resetBalance(int& balance) {
 bool playGame(int& balance) {
     int bet;
     cout << "\nYou have $" << balance << ". Enter your bet: ";
-    while (!(cin >> bet) || bet <= 0 || bet > balance) {
+    while (!(cin >> bet) || bet <= -1 || bet > balance) {
+        if (bet == -1) {
+            main();
+        }
+
         cout << "Invalid bet. Enter a value between 1 and " << balance << ": ";
         cin.clear();
         cin.ignore(1000, '\n');
@@ -58,11 +63,17 @@ bool playGame(int& balance) {
     printHand(playerHand, "Player");
     cout << "Dealer shows: " << dealerHand[0] << " ?" << endl;
 
-    char choice;
+    string choice;
     while (true) {
         cout << "Do you want to (h)it or (s)tand? ";
         cin >> choice;
-        if (choice == 'h') {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (choice == "-1") { // You can now return to the main menu
+            main();
+        }
+
+        if (choice[0] == 'h') {
             playerHand.push_back(drawCard());
             printHand(playerHand, "Player");
             if (calculateTotal(playerHand) > 21) {
@@ -72,7 +83,7 @@ bool playGame(int& balance) {
                 return true;
             }
         }
-        else if (choice == 's') {
+        else if (choice[0] == 's') {
             break;
         }
     }

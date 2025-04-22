@@ -8,7 +8,7 @@
 #include <set>
 #include <fstream>
 #include <map>
-#include "hangman.h"
+#include "games.h"
 
 using namespace std;
 
@@ -93,7 +93,7 @@ bool isValidGuess(const string& guess) {
     return guess.length() == 1 && isalpha(guess[0]);
 }
 
-void playHangman() {
+void hangman() {
     string username;
     cout << "Enter your username: ";
     getline(cin, username);
@@ -116,6 +116,11 @@ void playHangman() {
     do {
         cout << "Select difficulty (1 = Easy, 2 = Medium, 3 = Hard): ";
         getline(cin, difficulty);
+
+        if (difficulty == "-1") {
+            main();
+        }
+
         if (difficulty != "1" && difficulty != "2" && difficulty != "3") {
             cout << "Invalid selection. Please enter 1, 2, or 3.\n";
         }
@@ -140,6 +145,10 @@ void playHangman() {
 
         string guess;
         getline(cin, guess);
+
+        if (guess == "-1") {
+            main();
+        }
 
         if (!isValidGuess(guess)) {
             cout << "Invalid input. Please enter a single letter only.\n";
@@ -199,4 +208,24 @@ void playHangman() {
     }
 
     saveUsers("users.txt", users);
+
+    while (true) {
+        cout << "\nPlay again? (y/n): ";
+        char play_again;
+
+        cin >> play_again;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        play_again = tolower(play_again);
+
+        if (play_again == 'y') {
+            hangman();
+        }
+        else if (play_again == 'n') {
+            main();
+        }
+        else {
+            cout << "\nPlease enter a valid respone.";
+            continue;
+        }
+    }
 }
