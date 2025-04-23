@@ -2,11 +2,11 @@
 //
 
 // TO DO:
-// Add replayability to games (hangman, adventure once finished)
-// Option to go back to menu (adventure once finished)
-// User login system (maybe)
-// Implement Game 5
+// Option to go back to menu (adventure) (entering in -1 in any input prompt should return the user back to the main menu, although if this is too annoying to add we can scrap)
+// User login system (maybe) (probably not) (should we just delete the login system Jessie added?)
+// Implement Game 5 once finished and make it consistent with all the rest (i wish communication was easier)
 // IDK if the prof expects a log in system or a high score system or something. it was mentioned in the outline and in one of the meetings
+// Bugfix all games
 
 #include <iostream>
 #define NOMINMAX
@@ -18,6 +18,7 @@ using namespace std;
 
 void main() // breaks if int and i do not know why. every day i regret not picking java more and more. we couldve had a cool UI...
 {
+
     HANDLE hStdout;
 
     hStdout = GetStdHandle(STD_OUTPUT_HANDLE);

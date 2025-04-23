@@ -128,7 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="adventure.cpp" />
+    <ClCompile Include="Clues_And_Consequences.cpp" />
     <ClCompile Include="blackjack.cpp" />
     <ClCompile Include="Game Changer.cpp" />
     <ClCompile Include="hangman.cpp" />

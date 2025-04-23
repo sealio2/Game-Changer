@@ -30,7 +30,7 @@
     <ClCompile Include="util_functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="adventure.cpp">
+    <ClCompile Include="Clues_And_Consequences.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
