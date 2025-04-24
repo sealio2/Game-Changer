@@ -107,7 +107,6 @@ char win_check(char board[3][3]) {
         symbol = board[i][0];
 
         if (symbol == '_') {
-            found_underscore = true;
             continue;
         }
 
@@ -122,9 +121,9 @@ char win_check(char board[3][3]) {
         symbol = board[0][i];
 
         if (symbol == '_') {
-            found_underscore = true;
             continue;
         }
+
 
         if (board[0][i] == symbol && board[1][i] == symbol && board[2][i] == symbol) {
             return symbol;
@@ -151,40 +150,34 @@ char win_check(char board[3][3]) {
     }
 
     // Draw Checking
-    if (found_underscore == false) {
-        return 'D';
+    for (int i = 0; i != 3; i ++) {
+        for (int j = 0; j != 3; j++) {
+            if (board[i][j] == '_') {
+                return 'n';
+            }
+        }
     }
-    else {
-        return 'n'; // This return value isn't used for anything
-    }
+
+    return 'D';
 }
 
 void tictactoe() {
 
     char board[3][3] = { {'_', '_', '_'}, {'_', '_', '_'}, {'_', '_', '_'} };
-    int turn = 1;
+    int turn = 0;
     char result;
 
     // Main Game Loop
     while (true) {
-        clear_terminal();
-        player_turn(board);
-
-        result = win_check(board);
-
-        if (result != 'D' && result != 'n') {
-            cout << "Winner is " << result << "!";
-            break;
-        }
-        else if (result == 'D') {
-            cout << "Game is a draw!";
-            break;
-        }
-
-        computer_turn(board);
-
-        // There's probably a cleaner way to do this rather than copy-pasting the same code twice
         turn += 1;
+
+        if (turn & 1) {
+            clear_terminal();
+            player_turn(board);
+        }
+        else {
+            computer_turn(board);
+        }
 
         result = win_check(board);
 
