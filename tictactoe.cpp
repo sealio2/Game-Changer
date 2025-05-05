@@ -9,6 +9,11 @@
 
 using namespace std;
 
+int exit_now = 0;
+int player_wins = 0;
+int cpu_wins = 0;
+int draws = 0;
+
 void draw_board(char board[3][3]) {
     cout << "  1 2 3" << endl;
 
@@ -19,6 +24,7 @@ void draw_board(char board[3][3]) {
         }
         cout << endl;
     }
+    cout << "Player wins: " << player_wins << ", Computer wins: " << cpu_wins << ", Draws: " << draws << endl;
 }
 
 void player_turn(char board[3][3]) {
@@ -33,7 +39,8 @@ void player_turn(char board[3][3]) {
             cin >> x_pos;
 
             if (x_pos == -1) {
-                main();
+                exit_now = 1;
+                return;
             }
 
             if ((x_pos < 1) || (x_pos > 3)) {
@@ -50,7 +57,8 @@ void player_turn(char board[3][3]) {
             cin >> y_pos;
 
             if (y_pos == -1) {
-                main();
+                exit_now = 1;
+                return;
             }
 
             if ((y_pos < 1) || (y_pos > 3)) {
@@ -161,19 +169,32 @@ char win_check(char board[3][3]) {
     return 'D';
 }
 
+void initialize_board(char board[3][3]) {
+    memset(board, '_', 9); // Fills the memory location of the board array with 9 consecutive underscores
+    return;
+}
+
 void tictactoe() {
 
-    char board[3][3] = { {'_', '_', '_'}, {'_', '_', '_'}, {'_', '_', '_'} };
+    char board[3][3];
+    initialize_board(board);
+
     int turn = 0;
     char result;
 
     // Main Game Loop
     while (true) {
+
         turn += 1;
 
         if (turn & 1) {
             clear_terminal();
             player_turn(board);
+
+            if (exit_now != 0) {
+                exit_now = 0;
+                return;
+            }
         }
         else {
             computer_turn(board);
@@ -181,32 +202,43 @@ void tictactoe() {
 
         result = win_check(board);
 
-        if (result != 'D' && result != 'n') {
-            cout << "Winner is " << result << "!";
-            break;
-        }
-        else if (result == 'D') {
-            cout << "Game is a draw!";
-            break;
-        }
-    }
+        if (result != 'n') {
+            if (result != 'D') {
+                cout << "Winner is " << result << "!";
+                if (result == 'O') {
+                    cpu_wins++;
+                }
+                else {
+                    player_wins++;
+                }
+            }
+            else if (result == 'D') {
+                cout << "Game is a draw!";
+                draws++;
+            }
 
-    while (true) {
-        cout << "\nPlay again? (y/n): ";
-        char play_again;
+            while (true) {
+                cout << "\nPlay again? (y/n): ";
+                char play_again;
 
-        cin >> play_again;
-        play_again = tolower(play_again);
+                cin >> play_again;
+                play_again = tolower(play_again);
 
-        if (play_again == 'y') {
-            tictactoe();
+                if (play_again == 'y') {
+                    turn = 0;
+                    initialize_board(board);
+                    break;
+                }
+                else if (play_again == 'n') {
+                    return;
+                }
+                else {
+                    cout << "\nPlease enter a valid respone.";
+                    continue;
+                }
+            }
         }
-        else if (play_again == 'n') {
-            main();
-        }
-        else {
-            cout << "\nPlease enter a valid respone.";
-            continue;
-        }
+
+        continue;
     }
 }

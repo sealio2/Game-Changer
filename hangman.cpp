@@ -9,9 +9,12 @@
 #include <fstream>
 #include <map>
 #include "games.h"
+#include "util_functions.h"
 
 using namespace std;
 
+
+/*
 struct User {
     string username;
     int wins = 0;
@@ -38,6 +41,7 @@ void saveUsers(const string& filename, const map<string, User>& users) {
         file << user.username << ' ' << user.wins << ' ' << user.losses << ' ' << user.highScore << '\n';
     }
 }
+*/
 
 pair<string, string> getRandomWord(const string& difficulty) {
     vector<pair<string, string>> easyWords;
@@ -94,6 +98,7 @@ bool isValidGuess(const string& guess) {
 }
 
 void hangman() {
+    /*
     string username;
     cout << "Enter your username: ";
     getline(cin, username);
@@ -111,121 +116,133 @@ void hangman() {
             cout << "N/A.";
     }
     cout << "\n";
+    */
 
-    string difficulty;
-    do {
-        cout << "Select difficulty (1 = Easy, 2 = Medium, 3 = Hard): ";
-        getline(cin, difficulty);
+    while (true) {
+        clear_terminal();
 
-        if (difficulty == "-1") {
-            main();
-        }
+        string difficulty;
+        do {
+            cout << "Select difficulty (1 = Easy, 2 = Medium, 3 = Hard): ";
+            getline(cin, difficulty);
 
-        if (difficulty != "1" && difficulty != "2" && difficulty != "3") {
-            cout << "Invalid selection. Please enter 1, 2, or 3.\n";
-        }
-    } while (difficulty != "1" && difficulty != "2" && difficulty != "3");
+            if (difficulty == "-1") {
+                return;
+            }
 
-    auto [word, hint] = getRandomWord(difficulty);
-    string guessedWord(word.length(), '_');
-    set<char> wrongGuesses;
-    set<char> correctGuesses;
-    int attempts = 6;
-    int totalGuesses = 0;
+            if (difficulty != "1" && difficulty != "2" && difficulty != "3") {
+                cout << "Invalid selection. Please enter 1, 2, or 3.\n";
+            }
+        } while (difficulty != "1" && difficulty != "2" && difficulty != "3");
 
-    cout << "\nHint: " << hint << endl;
+        auto [word, hint] = getRandomWord(difficulty);
+        string guessedWord(word.length(), '_');
+        set<char> wrongGuesses;
+        set<char> correctGuesses;
+        int attempts = 6;
+        int totalGuesses = 0;
 
-    while (attempts > 0 && guessedWord != word) {
-        cout << "\nWord: ";
-        for (char c : guessedWord) cout << c << " ";
-        cout << "\nWrong guesses: ";
-        for (char c : wrongGuesses) cout << c << " ";
-        cout << "\nAttempts left: " << attempts << endl;
-        cout << "Enter your guess: ";
+        while (attempts > 0) {
+            clear_terminal();
+            cout << "\nHint: " << hint << endl;
 
-        string guess;
-        getline(cin, guess);
+            cout << "\nWord: ";
+            for (char c : guessedWord) cout << c << " ";
+            cout << "\nWrong guesses: ";
+            for (char c : wrongGuesses) cout << c << " ";
+            cout << "\nAttempts left: " << attempts << endl;
+            cout << "Enter your guess: ";
 
-        if (guess == "-1") {
-            main();
-        }
+            if (guessedWord == word) {
+                break;
+            }
 
-        if (!isValidGuess(guess)) {
-            cout << "Invalid input. Please enter a single letter only.\n";
-            continue;
-        }
+            string guess;
+            getline(cin, guess);
 
-        char letter = tolower(guess[0]);
-        totalGuesses++;
+            if (guess == "-1") {
+                return;
+            }
 
-        if (correctGuesses.count(letter) || wrongGuesses.count(letter)) {
-            cout << "You already guessed that letter.\n";
-            continue;
-        }
+            if (!isValidGuess(guess)) {
+                cout << "Invalid input. Please enter a single letter only.\n";
+                continue;
+            }
 
-        bool found = false;
-        for (int i = 0; i < word.length(); ++i) {
-            if (tolower(word[i]) == letter) {
-                guessedWord[i] = word[i];
-                found = true;
+            char letter = tolower(guess[0]);
+            totalGuesses++;
+
+            if (correctGuesses.count(letter) || wrongGuesses.count(letter)) {
+                cout << "You already guessed that letter.\n";
+                continue;
+            }
+
+            bool found = false;
+            for (int i = 0; i < word.length(); ++i) {
+                if (tolower(word[i]) == letter) {
+                    guessedWord[i] = word[i];
+                    found = true;
+                }
+            }
+
+            if (found) {
+                cout << "Correct!\n";
+                correctGuesses.insert(letter);
+            }
+            else {
+                cout << "Wrong guess.\n";
+                wrongGuesses.insert(letter);
+                attempts--;
             }
         }
 
-        if (found) {
-            cout << "Correct!\n";
-            correctGuesses.insert(letter);
+        bool won = guessedWord == word;
+        //cout << (won ? "\nCongratulations, " : "\nGame Over. ") << username;
+        cout << (won ? "! You guessed the word: " : ". The word was: ") << word << endl;
+
+        cout << "\n====== Game Stats ======" << endl;
+        //cout << "Username: " << username << endl;
+        cout << "Word: " << word << endl;
+        cout << "Difficulty: " << (difficulty == "1" ? "Easy" : difficulty == "2" ? "Medium" : "Hard") << endl;
+        cout << "Total Guesses: " << totalGuesses << endl;
+        cout << "Correct Guesses: " << correctGuesses.size() << endl;
+        cout << "Wrong Guesses: " << wrongGuesses.size() << endl;
+        cout << "Final Attempts Left: " << attempts << endl;
+        cout << "Result: " << (won ? "Victory" : "Defeat") << endl;
+        cout << "========================\n";
+
+        // Update user stats
+        /*
+        if (won) {
+            currentUser.wins++;
+            if (currentUser.highScore == 0 || totalGuesses < currentUser.highScore)
+                currentUser.highScore = totalGuesses;
         }
         else {
-            cout << "Wrong guess.\n";
-            wrongGuesses.insert(letter);
-            attempts--;
+            currentUser.losses++;
         }
-    }
 
-    bool won = guessedWord == word;
-    cout << (won ? "\nCongratulations, " : "\nGame Over. ") << username;
-    cout << (won ? "! You guessed the word: " : ". The word was: ") << word << endl;
+        saveUsers("users.txt", users);
+        */
 
-    cout << "\n====== Game Stats ======" << endl;
-    cout << "Username: " << username << endl;
-    cout << "Word: " << word << endl;
-    cout << "Difficulty: " << (difficulty == "1" ? "Easy" : difficulty == "2" ? "Medium" : "Hard") << endl;
-    cout << "Total Guesses: " << totalGuesses << endl;
-    cout << "Correct Guesses: " << correctGuesses.size() << endl;
-    cout << "Wrong Guesses: " << wrongGuesses.size() << endl;
-    cout << "Final Attempts Left: " << attempts << endl;
-    cout << "Result: " << (won ? "Victory" : "Defeat") << endl;
-    cout << "========================\n";
+        while (true) {
+            cout << "\nPlay again? (y/n): ";
+            char play_again;
 
-    // Update user stats
-    if (won) {
-        currentUser.wins++;
-        if (currentUser.highScore == 0 || totalGuesses < currentUser.highScore)
-            currentUser.highScore = totalGuesses;
-    }
-    else {
-        currentUser.losses++;
-    }
+            cin >> play_again;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            play_again = tolower(play_again);
 
-    saveUsers("users.txt", users);
-
-    while (true) {
-        cout << "\nPlay again? (y/n): ";
-        char play_again;
-
-        cin >> play_again;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        play_again = tolower(play_again);
-
-        if (play_again == 'y') {
-            hangman();
-        }
-        else if (play_again == 'n') {
-            main();
-        }
-        else {
-            cout << "\nPlease enter a valid respone.";
-            continue;
+            if (play_again == 'y') {
+                break;
+            }
+            else if (play_again == 'n') {
+                return;
+            }
+            else {
+                cout << "\nPlease enter a valid respone.";
+                continue;
+            }
         }
     }
 }

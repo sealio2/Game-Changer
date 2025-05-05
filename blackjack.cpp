@@ -7,6 +7,8 @@
 
 using namespace std;
 
+int exit_blackjack = 0;
+
 int drawCard() {
     int card = rand() % 13 + 1;
     return (card > 10) ? 10 : card;
@@ -48,7 +50,8 @@ bool playGame(int& balance) {
     cout << "\nYou have $" << balance << ". Enter your bet: ";
     while (!(cin >> bet) || bet <= -1 || bet > balance) {
         if (bet == -1) {
-            main();
+            exit_blackjack = 1;
+            return false;
         }
 
         cout << "Invalid bet. Enter a value between 1 and " << balance << ": ";
@@ -70,7 +73,8 @@ bool playGame(int& balance) {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         if (choice == "-1") { // You can now return to the main menu
-            main();
+            exit_blackjack = 1;
+            return false;
         }
 
         if (choice[0] == 'h') {
@@ -121,6 +125,12 @@ void blackjack() {
 
     do {
         playGame(balance);
+
+        if (exit_blackjack != 0) {
+            exit_blackjack = 0;
+            return;
+        }
+
         cout << "\nPlay again? (y/n): ";
         cin >> playAgain;
     } while (playAgain == 'y' || playAgain == 'Y');

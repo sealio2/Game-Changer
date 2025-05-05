@@ -23,3 +23,7 @@ int random_range(int from, int to) { // Inclusive
 void timer(int seconds) { // A timer (in seconds)
     this_thread::sleep_for(chrono::seconds(seconds));
 }
+
+void move_cursor(int row, int col) {
+    std::cout << "\033[" << row << ";" << col << "H"; // move cursor to row 4 column 4
+}

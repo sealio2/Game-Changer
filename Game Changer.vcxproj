@@ -132,6 +132,7 @@
     <ClCompile Include="blackjack.cpp" />
     <ClCompile Include="Game Changer.cpp" />
     <ClCompile Include="hangman.cpp" />
+    <ClCompile Include="pong.cpp" />
     <ClCompile Include="tictactoe.cpp" />
     <ClCompile Include="util_functions.cpp" />
   </ItemGroup>

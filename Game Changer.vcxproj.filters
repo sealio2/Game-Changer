@@ -33,6 +33,9 @@
     <ClCompile Include="Clues_And_Consequences.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pong.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
