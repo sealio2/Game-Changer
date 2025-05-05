@@ -1,13 +1,6 @@
 // Game Changer.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-// TO DO:
-// Option to go back to menu (adventure) (entering in -1 in any input prompt should return the user back to the main menu, although if this is too annoying to add we can scrap)
-// User login system (maybe) (probably not) (should we just delete the login system Jessie added?)
-// Implement Game 5 once finished and make it consistent with all the rest (i wish communication was easier)
-// IDK if the prof expects a log in system or a high score system or something. it was mentioned in the outline and in one of the meetings
-// Bugfix all games
-
 #include <iostream>
 #define NOMINMAX
 #include <Windows.h>
