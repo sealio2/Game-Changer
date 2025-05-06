@@ -125,6 +125,8 @@ void hangman() {
         do {
             cout << "Select difficulty (1 = Easy, 2 = Medium, 3 = Hard): ";
             getline(cin, difficulty);
+            cin.ignore(10000, '\n');
+            cin.get();
 
             if (difficulty == "-1") {
                 return;
