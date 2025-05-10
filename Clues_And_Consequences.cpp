@@ -22,6 +22,18 @@ int clueDoctor, clueMajor, clueActor, clueWeapon, clueLetter;
 int French, Carmine, Prunem, Porter;
 int killer, endrecap, playagain;
 
+//function to call to reset all variables
+void resetVariables() {
+    // Reset all global variables to 0
+    choiceblock1 = choiceblock2 = choiceblock3 = choiceblock4 = choiceblock5 = choiceblock6 = 0;
+    chair = body = fireplace = 0;
+    water = button = pearl = 0;
+    clueDoctor = clueMajor = clueActor = clueWeapon = clueLetter = 0;
+    French = Carmine = Prunem = Porter = 0;
+    killer = endrecap = playagain = 0;
+    // Note: name doesn't need to be reset as it gets overwritten when the game starts
+}
+
 //function for recapping the entire adventure to the user, what choices they made, and what information they learned to be used at the end of the program.
 void recap() {
 
@@ -51,7 +63,7 @@ void recap() {
             continue;
         }
 
-        //various choices in the program will return 0 and exit the program based on the user's choice.
+        //various choices in the program will return and exit the program based on the user's choice.
         if (recap == 2) {
             recap = 0;
             return;
@@ -166,12 +178,33 @@ void recap() {
             break;
         }
     }
+    
+    //asking the player if they would like to play the game again
+    std::cout << "\nThanks for playing!\nWould you like to play Clues and Consequences again?" << std::endl;
+    std::cout << "\n1. Yes" << std::endl;
+    std::cout << "2. No" << std::endl;
+
+    //handling error for invalid input type
+    if (!(std::cin >> playagain)) {
+        std::cout << "\nInvalid input. Please choose a number from the list." << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << std::endl;
+    }
+    //handling error for input outside of scope
+    if (playagain < 1 || playagain > 2) {
+        std::cout << "\nPlease choose a number from the list." << std::endl;
+        std::cout << std::endl;
+    }
+    //end of do-while loop checking the 'playagain' variable when the player was asked if they wanted to play again
+    //if it matches, it program will restart, otherwise it will terminate at return
+    resetVariables();
     return; //exiting the function here
 }
 
 // Main function, the starting point of the program
-int adventure()
-{
+void adventure()
+{   resetVariables();
     //a do-while loop will be used to allow the player to keep playing this game from the beginning as many times as they would like until exiting back to the game changer.
     do {
         // Prompt the user to enter their player name
@@ -282,7 +315,8 @@ int adventure()
             if (choiceblock2 == 2) {
                 std::cout << "\nYou decide to turn around and leave, walking back into the rain and into the awaiting car." << std::endl;
                 std::cout << "It seems tonight was not the night for a dinner party for you. " << std::endl;
-                return 0;
+                recap();
+                return;
                 break;
             }
 
@@ -328,7 +362,8 @@ int adventure()
             if (choiceblock3 == 2) {
                 std::cout << "\nYou quickly rush out the door and back into the rainy night." << std::endl;
                 std::cout << "You aren't sure what you were invited for, but a dead body definitely is not any of your business.";
-                return 0;
+                recap();
+                return;
             }
         }
 
@@ -381,7 +416,8 @@ int adventure()
                 std::cout << "Nobody seems to argue with Major French, and eventually the police arrive. The circumstances don't look great for you, and you are taken to the station." << std::endl;
                 std::cout << "You are arrested for not only assault, but kept as a suspect in the murder of Mr Drobby as well." << std::endl;
                 std::cout << "Eventually you are released, as no evidence was found, but you never find out who the real killer is." << std::endl;
-                return 0;
+                recap();
+                return;
             }
         }
 
@@ -897,8 +933,9 @@ int adventure()
             continue;
         }
         //end of do-while loop checking the 'playagain' variable when the player was asked if they wanted to play again
-        //if it matches, it program will restart, otherwise it will terminate at return 0
+        //if it matches, it program will restart, otherwise it will terminate at return
     } while (playagain == 1);
 
-    return 0;
+    recap();
+    return;
 }
