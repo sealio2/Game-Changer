@@ -1,6 +1,6 @@
 #pragma once
 
-int adventure();
+void adventure();
 void blackjack();
 void hangman();
 void tictactoe();

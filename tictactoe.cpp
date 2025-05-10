@@ -1,3 +1,6 @@
+// blackjack.cpp : A singleplayer Tic-Tac-Toe game against the computer.
+// By Benjamin Allen
+
 #include <iostream>
 #include "util_functions.h"
 #include <string>
@@ -17,6 +20,7 @@ int draws = 0;
 void draw_board(char board[3][3]) {
     cout << "  1 2 3" << endl;
 
+    // Displaying board + coordinate numbers
     for (int i = 0; i < 3; i++) {
         cout << i + 1 << " ";
         for (int j = 0; j < 3; j++) {
@@ -33,6 +37,7 @@ void player_turn(char board[3][3]) {
     int x_pos;
     int y_pos;
 
+    // Player turn logic inside loop
     while (true) {
         while (true) {
             cout << "Enter the x coord (1, 2, 3) (-1 to return to menu):" << endl;
@@ -51,6 +56,7 @@ void player_turn(char board[3][3]) {
             }
             break;
         }
+
 
         while (true) {
             cout << "Enter the y coord (1, 2, 3) (-1 to return to menu):" << endl;
@@ -90,6 +96,7 @@ void computer_turn(char board[3][3]) {
     int computer_x;
     int computer_y;
 
+    // Chooses a random coordinate, if taken, tries again
     while (true) {
         computer_x = random_range(0, 2);
         computer_y = random_range(0, 2);
@@ -200,6 +207,7 @@ void tictactoe() {
             computer_turn(board);
         }
 
+        // Checking result
         result = win_check(board);
 
         if (result != 'n') {

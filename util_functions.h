@@ -5,6 +5,5 @@
 void clear_terminal();
 int random_range(int from, int to);
 void timer(int seconds);
-void move_cursor(int row, int col);
 
 #endif

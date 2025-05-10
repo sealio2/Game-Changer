@@ -1,3 +1,6 @@
+// blackjack.cpp : A singleplayer hangman game.
+// By Jessie Ndikum
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -12,36 +15,6 @@
 #include "util_functions.h"
 
 using namespace std;
-
-
-/*
-struct User {
-    string username;
-    int wins = 0;
-    int losses = 0;
-    int highScore = 0; // lowest number of guesses for a win
-};
-
-map<string, User> loadUsers(const string& filename) {
-    map<string, User> users;
-    ifstream file(filename);
-    if (!file) return users;
-
-    string name;
-    int wins, losses, score;
-    while (file >> name >> wins >> losses >> score) {
-        users[name] = User{ name, wins, losses, score };
-    }
-    return users;
-}
-
-void saveUsers(const string& filename, const map<string, User>& users) {
-    ofstream file(filename);
-    for (const auto& [name, user] : users) {
-        file << user.username << ' ' << user.wins << ' ' << user.losses << ' ' << user.highScore << '\n';
-    }
-}
-*/
 
 pair<string, string> getRandomWord(const string& difficulty) {
     vector<pair<string, string>> easyWords;
@@ -98,25 +71,6 @@ bool isValidGuess(const string& guess) {
 }
 
 void hangman() {
-    /*
-    string username;
-    cout << "Enter your username: ";
-    getline(cin, username);
-
-    map<string, User> users = loadUsers("users.txt");
-    User& currentUser = users[username];
-    currentUser.username = username;
-
-    cout << "\nWelcome to Hangman, " << username << "!";
-    if (currentUser.wins + currentUser.losses > 0) {
-        cout << " You have " << currentUser.wins << " wins and " << currentUser.losses << " losses. Best score: ";
-        if (currentUser.highScore > 0)
-            cout << currentUser.highScore << " guesses.";
-        else
-            cout << "N/A.";
-    }
-    cout << "\n";
-    */
 
     while (true) {
         clear_terminal();
@@ -124,9 +78,7 @@ void hangman() {
         string difficulty;
         do {
             cout << "Select difficulty (1 = Easy, 2 = Medium, 3 = Hard): ";
-            getline(cin, difficulty);
-            cin.ignore(10000, '\n');
-            cin.get();
+            cin >> difficulty;
 
             if (difficulty == "-1") {
                 return;
@@ -212,20 +164,6 @@ void hangman() {
         cout << "Final Attempts Left: " << attempts << endl;
         cout << "Result: " << (won ? "Victory" : "Defeat") << endl;
         cout << "========================\n";
-
-        // Update user stats
-        /*
-        if (won) {
-            currentUser.wins++;
-            if (currentUser.highScore == 0 || totalGuesses < currentUser.highScore)
-                currentUser.highScore = totalGuesses;
-        }
-        else {
-            currentUser.losses++;
-        }
-
-        saveUsers("users.txt", users);
-        */
 
         while (true) {
             cout << "\nPlay again? (y/n): ";

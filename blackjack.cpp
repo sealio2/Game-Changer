@@ -1,3 +1,6 @@
+// blackjack.cpp : A singleplayer blackjack game against a cpu.
+// By Jared Knezevich
+
 #include <iostream>
 #include <vector>
 #include <cstdlib>

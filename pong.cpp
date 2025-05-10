@@ -1,3 +1,6 @@
+// blackjack.cpp : A two-player pong game that runs in terminal.
+// By Om Patel
+
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
@@ -32,9 +35,6 @@ void Draw() {
     system("cls");
 
     cout << "Paddle 1 Controls: W-S, Paddle 2 Controls: I-K, P to pause" << endl;
-
-    //move_cursor(ballY, ballX);
-    //cout << " ";
 
     for (int i = 0; i < width + 2; i++) cout << "#";
     cout << endl;

@@ -178,7 +178,7 @@ void recap() {
             break;
         }
     }
-    
+
     //asking the player if they would like to play the game again
     std::cout << "\nThanks for playing!\nWould you like to play Clues and Consequences again?" << std::endl;
     std::cout << "\n1. Yes" << std::endl;
@@ -204,7 +204,8 @@ void recap() {
 
 // Main function, the starting point of the program
 void adventure()
-{   resetVariables();
+{
+    resetVariables();
     //a do-while loop will be used to allow the player to keep playing this game from the beginning as many times as they would like until exiting back to the game changer.
     do {
         // Prompt the user to enter their player name

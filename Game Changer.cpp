@@ -1,28 +1,24 @@
-// Game Changer.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Game Changer.cpp : The main module that acts as a main menu for switching between games.
+// By Benjamin Allen and Angela Berry
 
 #include <iostream>
-//#define NOMINMAX
 #include <Windows.h>
 #include "util_functions.h"
 #include "games.h"
 
 using namespace std;
 
-int main() // breaks if int and i do not know why. every day i regret not picking java more and more. we couldve had a cool UI...
+int main()
 {
-
+    // Allows for ANSI console commands, useful for clearing the terminal
     HANDLE hStdout;
-
     hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-
     SetConsoleMode(hStdout, ENABLE_PROCESSED_OUTPUT | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 
-
+    // Main loop for input validation
     while (true) {
         clear_terminal();
   
-
         cout << "Choose a game: \n";
         cout << "0: Give me an explanation of what each game is \n";
         cout << "1: Tic Tac Toe \n";
@@ -37,6 +33,7 @@ int main() // breaks if int and i do not know why. every day i regret not pickin
 
         string choice;
 
+        // Input validation
         while (true) {
             cin >> choice;
             if (choice != "0" && choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5" && choice != "6" && choice != "-1") {
@@ -44,11 +41,6 @@ int main() // breaks if int and i do not know why. every day i regret not pickin
             }
             else break;
         }
-
-
-        //cin.clear();
-        //cin.ignore(10000, '\n');
-
 
         if (choice == "0") {
             clear_terminal();
@@ -63,6 +55,8 @@ int main() // breaks if int and i do not know why. every day i regret not pickin
             cin.get();
             continue;
         }
+
+        // Game changing
 
         else if (choice == "1") {
             clear_terminal();
