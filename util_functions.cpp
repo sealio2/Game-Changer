@@ -1,3 +1,6 @@
+// util_functions.cpp : A file holding some helplful functions: clearing the terminal, a random number generator, and a timer.
+// By Benjamin Allen
+
 #include "util_functions.h"
 #include <random>
 #include <chrono>
