@@ -8,6 +8,8 @@
 
 using namespace std;
 
+bool from_recap = false; // Global variable that ignores clear_terminal() at the start if coming from Clues And Consequences Recap
+
 int main()
 {
     // Allows for ANSI console commands, useful for clearing the terminal
@@ -17,7 +19,13 @@ int main()
 
     // Main loop for input validation
     while (true) {
-        clear_terminal();
+
+        if (!from_recap) { // If recap option is chosen from Clues and Consequences
+            clear_terminal();
+        }
+        else {
+            cout << endl;
+        }
   
         cout << "Choose a game: \n";
         cout << "0: Give me an explanation of what each game is \n";
@@ -92,7 +100,6 @@ int main()
             clear_terminal();
             return 0;
         }
-
     }
     return 0;
 }

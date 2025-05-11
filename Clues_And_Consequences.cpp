@@ -22,6 +22,8 @@ int clueDoctor, clueMajor, clueActor, clueWeapon, clueLetter;
 int French, Carmine, Prunem, Porter;
 int killer, endrecap, playagain;
 
+extern bool from_recap; // Declaring global from_recap variable from Game Changer.cpp, a condition to skip clear_terminal() when returing to main file
+
 //function to call to reset all variables
 void resetVariables() {
     // Reset all global variables to 0
@@ -31,6 +33,7 @@ void resetVariables() {
     clueDoctor = clueMajor = clueActor = clueWeapon = clueLetter = 0;
     French = Carmine = Prunem = Porter = 0;
     killer = endrecap = playagain = 0;
+    from_recap = false;
     // Note: name doesn't need to be reset as it gets overwritten when the game starts
 }
 
@@ -72,6 +75,8 @@ void recap() {
         //from here on is a large series of if statements that are going to check the optional variables in the program.
         //if the user followed certain paths and found out relating to these clues, they will store and then be reprinted in the recap during the end of the program.
         if (recap == 1) {
+            from_recap = true;
+
             std::cout << "\nAfter getting a cryptic letter from a Lord Drobby who claimed he would be killed tonight be a dinner guest,\nyou attended the dinner." << std::endl;
             std::cout << "After arriving, you also found yourself in the company of a retired military Major, a doctor, and a movie star." << std::endl;
 
