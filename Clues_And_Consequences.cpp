@@ -22,8 +22,6 @@ int clueDoctor, clueMajor, clueActor, clueWeapon, clueLetter;
 int French, Carmine, Prunem, Porter;
 int killer, endrecap, playagain;
 
-extern bool from_recap; // Declaring global from_recap variable from Game Changer.cpp, a condition to skip clear_terminal() when returing to main file
-
 //function to call to reset all variables
 void resetVariables() {
     // Reset all global variables to 0
@@ -33,7 +31,6 @@ void resetVariables() {
     clueDoctor = clueMajor = clueActor = clueWeapon = clueLetter = 0;
     French = Carmine = Prunem = Porter = 0;
     killer = endrecap = playagain = 0;
-    from_recap = false;
     // Note: name doesn't need to be reset as it gets overwritten when the game starts
 }
 
@@ -75,7 +72,6 @@ void recap() {
         //from here on is a large series of if statements that are going to check the optional variables in the program.
         //if the user followed certain paths and found out relating to these clues, they will store and then be reprinted in the recap during the end of the program.
         if (recap == 1) {
-            from_recap = true;
 
             std::cout << "\nAfter getting a cryptic letter from a Lord Drobby who claimed he would be killed tonight be a dinner guest,\nyou attended the dinner." << std::endl;
             std::cout << "After arriving, you also found yourself in the company of a retired military Major, a doctor, and a movie star." << std::endl;
@@ -88,7 +84,7 @@ void recap() {
 
             if (choiceblock2 == 2) {
                 std::cout << "\nYou decided this was not the night you wanted to get involved in a potential murder dinner,\nand prompty went home." << std::endl;
-                return;
+                //return;
             }
 
             if (choiceblock3 == 1) {
@@ -100,7 +96,7 @@ void recap() {
                 std::cout << "\nAt the sight of this, you remembered the note sent to you and made a hasty exit." << std::endl;
                 std::cout << "A dead body was going to be someone else's responsibility." << std::endl;
                 std::cout << "You never did find out who the killer was." << std::endl;
-                return;
+                //return;
 
             }
 
@@ -119,7 +115,7 @@ void recap() {
             if (choiceblock4 == 3) {
                 std::cout << "\nTrying to fight the major results in your own arrest, and are held as a murder suspect." << std::endl;
                 std::cout << "While eventually released for lack of evidence, you never find out who the real killer is." << std::endl;
-                return;
+                //return;
 
             }
 
@@ -179,46 +175,30 @@ void recap() {
             if (killer == 4) {
                 std::cout << "\nYou had Mr Porter arrested. He was not the actual killer, and unfortunately you put away an innocent man." << std::endl;
             }
+
             recap = 0;
+
             break;
         }
     }
-
-    //asking the player if they would like to play the game again
-    std::cout << "\nThanks for playing!\nWould you like to play Clues and Consequences again?" << std::endl;
-    std::cout << "\n1. Yes" << std::endl;
-    std::cout << "2. No" << std::endl;
-
-    //handling error for invalid input type
-    if (!(std::cin >> playagain)) {
-        std::cout << "\nInvalid input. Please choose a number from the list." << std::endl;
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << std::endl;
-    }
-    //handling error for input outside of scope
-    if (playagain < 1 || playagain > 2) {
-        std::cout << "\nPlease choose a number from the list." << std::endl;
-        std::cout << std::endl;
-    }
-    //end of do-while loop checking the 'playagain' variable when the player was asked if they wanted to play again
-    //if it matches, it program will restart, otherwise it will terminate at return
-    resetVariables();
-    return; //exiting the function here
 }
 
 // Main function, the starting point of the program
 void adventure()
 {
-    resetVariables();
     //a do-while loop will be used to allow the player to keep playing this game from the beginning as many times as they would like until exiting back to the game changer.
     do {
+        resetVariables();
         // Prompt the user to enter their player name
         std::cout << "This is a single player adventure game. The goal of this game called 'Clues and Consequences' is to make choices and discover clues to solve a mystery." << std::endl;
         std::cout << "It's up to you to investigate how much or how little you would like to find out who is the killer in this mystery story." << std::endl;
         std::cout << "Thank you for playing!" << std::endl;
         std::cout << "\nPlease enter your name: ";
         std::cin >> name;
+
+        if (name == "-1") {
+            return;
+        }
 
         std::cout << "\nRaindrops hit the window as your look down at the invitation in your hands.\nIt's dark outside and the words are hard to read, but you know it's from the lord of an old and established house of the town." << std::endl;
         std::cout << "The note had read 'I would invite you to dinner tonight, but then again I will be dead. And it was one of my guests'." << std::endl;
@@ -252,6 +232,10 @@ void adventure()
             }
             //again handling error for input outside of scope
             if (choiceblock1 < 1 || choiceblock1 > 4) {
+                if (choiceblock1 == -1) {
+                    return;
+                }
+
                 std::cout << "\nPlease choose a number from the list." << std::endl;
                 std::cout << std::endl;
                 continue;
@@ -306,6 +290,9 @@ void adventure()
                 continue;
             }
             if (choiceblock2 < 1 || choiceblock2 > 2) {
+                if (choiceblock2 == -1) {
+                    return;
+                }
                 std::cout << "\nPlease choose a number from the list." << std::endl;
                 std::cout << std::endl;
                 continue;
@@ -321,8 +308,7 @@ void adventure()
             if (choiceblock2 == 2) {
                 std::cout << "\nYou decide to turn around and leave, walking back into the rain and into the awaiting car." << std::endl;
                 std::cout << "It seems tonight was not the night for a dinner party for you. " << std::endl;
-                recap();
-                return;
+                goto gameOver;
                 break;
             }
 
@@ -350,6 +336,11 @@ void adventure()
                 continue;
             }
             if (choiceblock3 < 1 || choiceblock3 > 2) {
+
+                if (choiceblock3 == -1) {
+                    return;
+                }
+
                 std::cout << "\nPlease choose a number from the list." << std::endl;
                 std::cout << std::endl;
                 continue;
@@ -368,8 +359,8 @@ void adventure()
             if (choiceblock3 == 2) {
                 std::cout << "\nYou quickly rush out the door and back into the rainy night." << std::endl;
                 std::cout << "You aren't sure what you were invited for, but a dead body definitely is not any of your business.";
-                recap();
-                return;
+                goto gameOver;
+                break;
             }
         }
 
@@ -396,6 +387,10 @@ void adventure()
                 continue;
             }
             if (choiceblock4 < 1 || choiceblock4 > 3) {
+
+                if (choiceblock4 == -1) {
+                    return;
+                }
                 std::cout << "\nPlease choose a number from the list." << std::endl;
                 std::cout << std::endl;
                 continue;
@@ -422,8 +417,8 @@ void adventure()
                 std::cout << "Nobody seems to argue with Major French, and eventually the police arrive. The circumstances don't look great for you, and you are taken to the station." << std::endl;
                 std::cout << "You are arrested for not only assault, but kept as a suspect in the murder of Mr Drobby as well." << std::endl;
                 std::cout << "Eventually you are released, as no evidence was found, but you never find out who the real killer is." << std::endl;
-                recap();
-                return;
+                goto gameOver;
+                break;
             }
         }
 
@@ -446,6 +441,10 @@ void adventure()
                 continue;
             }
             if (choiceblock5 < 1 || choiceblock5 > 4) {
+                if (choiceblock5 == -1) {
+                    return;
+                }
+
                 std::cout << "\nPlease choose a number from the list." << std::endl;
                 std::cout << std::endl;
                 continue;
@@ -473,6 +472,10 @@ void adventure()
                         continue;
                     }
                     if (bodyInvestigate < 1 || bodyInvestigate > 3) {
+                        if (bodyInvestigate == -1) {
+                            return;
+                        }
+
                         std::cout << "\nPlease choose a number from the list." << std::endl;
                         std::cout << std::endl;
                         continue;
@@ -520,6 +523,11 @@ void adventure()
                         continue;
                     }
                     if (areaInvestigate < 1 || areaInvestigate > 3) {
+
+                        if (areaInvestigate == -1) {
+                            return;
+                        }
+
                         std::cout << "\nPlease choose a number from the list." << std::endl;
                         std::cout << std::endl;
                         continue;
@@ -563,6 +571,7 @@ void adventure()
                     std::cout << "4. Look at something else in the room." << std::endl;
 
                     if (!(std::cin >> fireplaceInvestigate)) {
+
                         std::cout << "\nInvalid input. Please choose a number from the list." << std::endl;
                         std::cin.clear();
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -570,6 +579,9 @@ void adventure()
                         continue;
                     }
                     if (fireplaceInvestigate < 1 || fireplaceInvestigate > 4) {
+                        if (fireplaceInvestigate == -1) {
+                            return;
+                        }
                         std::cout << "\nPlease choose a number from the list." << std::endl;
                         std::cout << std::endl;
                         continue;
@@ -624,6 +636,10 @@ void adventure()
                     continue;
                 }
                 if (choiceblock6 < 1 || choiceblock6 > 5) {
+                    if (choiceblock6 == -1) {
+                        return;
+                    }
+
                     std::cout << "\nPlease choose a number from the list." << std::endl;
                     std::cout << std::endl;
                     continue;
@@ -726,6 +742,10 @@ void adventure()
                 continue;
             }
             if (endrecap < 1 || endrecap > 2) {
+                if (endrecap == -1) {
+                    return;
+                }
+
                 std::cout << "\nPlease choose a number from the list." << std::endl;
                 std::cout << std::endl;
                 continue;
@@ -795,6 +815,11 @@ void adventure()
                 continue;
             }
             if (killer < 1 || killer > 4) {
+
+                if (killer == -1) {
+                    return;
+                }
+
                 std::cout << "\nPlease choose a number from the list." << std::endl;
                 std::cout << std::endl;
                 continue;
@@ -914,7 +939,7 @@ void adventure()
             break;
         }
 
-
+    gameOver:
 
         //function to recap the entire story.
         recap();
@@ -941,7 +966,5 @@ void adventure()
         //end of do-while loop checking the 'playagain' variable when the player was asked if they wanted to play again
         //if it matches, it program will restart, otherwise it will terminate at return
     } while (playagain == 1);
-
-    recap();
     return;
 }

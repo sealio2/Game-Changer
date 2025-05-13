@@ -8,7 +8,6 @@
 
 using namespace std;
 
-bool from_recap = false; // Global variable that ignores clear_terminal() at the start if coming from Clues And Consequences Recap
 
 int main()
 {
@@ -19,13 +18,7 @@ int main()
 
     // Main loop for input validation
     while (true) {
-
-        if (!from_recap) { // If recap option is chosen from Clues and Consequences
-            clear_terminal();
-        }
-        else {
-            cout << endl;
-        }
+        clear_terminal();
   
         cout << "Choose a game: \n";
         cout << "0: Give me an explanation of what each game is \n";
@@ -36,7 +29,7 @@ int main()
         cout << "5: Pong \n";
         cout << "6: Exit Program \n";
 
-        cout << endl << "Type '-1' to go back to the menu at any time (Not in Clues and Consequences).\n";
+        cout << endl << "Type '-1' to go back to the menu at any time.\n";
         cout << endl;
 
         string choice;
