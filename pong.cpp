@@ -32,7 +32,7 @@ void Setup() {
 }
 
 void Draw() {
-    system("cls");
+    clear_terminal();
 
     cout << "Paddle 1 Controls: W-S, Paddle 2 Controls: I-K, P to pause" << endl;
 
